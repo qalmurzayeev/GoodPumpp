@@ -133,6 +133,41 @@ opacity: 0;
 width: 0;
 height: 0;
 }
+/* Мобильді дизайн үшін медиа-сұраныс */
+  @media (max-width: 768px) {
+    aside {
+      position: fixed;
+      top: 80px;
+      left: -100%;
+      width: 80%;
+      height: calc(100vh - 80px);
+      transition: all 0.3s ease;
+      z-index: 40;
+      background: white;
+      overflow-y: auto;
+    }
+    
+    aside.active {
+      left: 0;
+    }
+    
+    .sidebar-toggle {
+      display: block;
+      position: fixed;
+      top: 90px;
+      left: 10px;
+      z-index: 50;
+      background: #3176FF;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+  }
 .switch-slider {
 position: absolute;
 cursor: pointer;
@@ -843,6 +878,26 @@ qanatq@bk.ru
 </button>
 </div>
 <script>
+// Мобильді санаттарды ашу/жабу функциясы
+  document.addEventListener("DOMContentLoaded", function() {
+    const sidebarToggle = document.createElement('button');
+    sidebarToggle.className = 'sidebar-toggle md:hidden';
+    sidebarToggle.innerHTML = '<i class="ri-menu-line"></i>';
+    document.body.appendChild(sidebarToggle);
+    
+    const sidebar = document.querySelector('aside');
+    
+    sidebarToggle.addEventListener('click', function() {
+      sidebar.classList.toggle('active');
+    });
+    
+    // Сайттың басқа бөліктерін басқанда санаттарды жабу
+    document.addEventListener('click', function(e) {
+      if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+        sidebar.classList.remove('active');
+      }
+    });
+  });
 document.addEventListener("DOMContentLoaded", function () {
   const productsGrid = document.getElementById("products");
   const pagination = document.getElementById("pagination");
